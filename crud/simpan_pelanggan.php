@@ -17,11 +17,17 @@ include "../system/proses.php";
 									'$_POST[no_telp]',
 									'$_POST[email]'");
 		if( $simpan ){
-			echo "<script>alert('Data Berhasil Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=pelanggan'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Pelanggan',
+				'message' => 'Pelanggan baru berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=pelanggan'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Pelanggan',
+				'message' => 'Pelanggan baru gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 		
 	}else{
@@ -33,13 +39,22 @@ include "../system/proses.php";
 									"id_pelanggan = '$_POST[id_pelanggan]'");
 
 		if( $edit ){
-			echo "<script>alert('Data Berhasil Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=pelanggan'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Pelanggan',
+				'message' => 'Perubahan data pelanggan berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=pelanggan'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Pelanggan',
+				'message' => 'Perubahan data pelanggan gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 	}
+
+	header("Location: ../index.php?p=pelanggan");
+	exit;
 
  ?>
  

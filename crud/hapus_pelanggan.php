@@ -7,14 +7,23 @@
 		exit;
 	}
 	 
-	include "../system/proses.php";
+include "../system/proses.php";
 	$idp = $_GET['idp'];
 	$hapus = $db->delete("pelanggan","id_pelanggan='$idp'");
 	if( $hapus ){
-		echo "<script>alert('Data Berhasil Dihapus')</script>";
-		echo "<script>document.location.href='../index.php?p=pelanggan'</script>";
+		$_SESSION['flash'] = [
+			'title' => 'Data Pelanggan',
+			'message' => 'Data pelanggan berhasil dihapus.',
+			'type' => 'success'
+		];
 	}else{
-		echo "<script>alert('Data Gagal Dihapus')</script>";
-		echo "<script>document.location.href='../index.php?p=pelanggan'</script>";
+		$_SESSION['flash'] = [
+			'title' => 'Data Pelanggan',
+			'message' => 'Data pelanggan gagal dihapus.',
+			'type' => 'error'
+		];
 	}
+
+	header("Location: ../index.php?p=pelanggan");
+	exit;
  ?>

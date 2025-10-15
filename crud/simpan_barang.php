@@ -17,11 +17,17 @@ include "../system/proses.php";
 									'$_POST[expired]',
 									'$_POST[id_jenis]'");
 		if( $simpan ){
-			echo "<script>alert('Data Berhasil Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Barang',
+				'message' => 'Data barang berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Barang',
+				'message' => 'Data barang gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 
 	}else{
@@ -33,12 +39,21 @@ include "../system/proses.php";
 									id_jenis_brg='$_POST[id_jenis]'","id_brg = '$_POST[id_brg]'");
 
 		if( $edit ){
-			echo "<script>alert('Data Berhasil Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Barang',
+				'message' => 'Perubahan data barang berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Data Barang',
+				'message' => 'Perubahan data barang gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 	}
+
+	header("Location: ../index.php?p=barang");
+	exit;
 
  ?>

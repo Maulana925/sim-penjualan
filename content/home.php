@@ -4,24 +4,24 @@
 
 <div class="isi-content">
 	<div class="home-container">
-		<div class="welcome-card">
+		<div class="welcome-card tilt-card" data-float="22">
 			<h1>👋 Selamat Datang di <span>SIM Penjualan</span></h1>
 			<p>Kelola data barang, pelanggan, dan transaksi Anda dengan mudah dan efisien.</p>
 		</div>
 
 		<div class="stat-container">
-			<div class="stat-card">
+			<a href="index.php?p=barang" class="stat-card tilt-card" data-float="14">
 				<i class="fas fa-box"></i>
 				<p>Data Barang</p>
-			</div>
-			<div class="stat-card">
+			</a>
+			<a href="index.php?p=pelanggan" class="stat-card tilt-card" data-float="18">
 				<i class="fas fa-users"></i>
 				<p>Pelanggan</p>
-			</div>
-			<div class="stat-card">
+			</a>
+			<a href="index.php?p=transaksi" class="stat-card tilt-card" data-float="20">
 				<i class="fas fa-shopping-cart"></i>
 				<p>Transaksi</p>
-			</div>
+			</a>
 		</div>
 	</div>
 </div>
@@ -66,6 +66,9 @@
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 		width: 180px;
 		transition: 0.3s;
+		text-decoration: none;
+		color: inherit;
+		display: block;
 	}
 
 	.stat-card:hover {

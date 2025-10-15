@@ -14,22 +14,36 @@
 										'$_POST[password]',
 										'$_POST[level]'");
 		if ($simpan){
-			echo "<script>alert('Data Berhasil Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=user'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Manajemen User',
+				'message' => 'User baru berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=user'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Manajemen User',
+				'message' => 'User baru gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 	}else{
 		$edit=$db->update("petugas","id_petugas='$_POST[id_user]',
 									username='$_POST[username]',password='$_POST[password]',level='$_POST[level]'","id_petugas = '$_POST[id_user]'");
 
 		if( $edit ){
-			echo "<script>alert('Data Berhasil Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=user'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Manajemen User',
+				'message' => 'Perubahan user berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=user'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Manajemen User',
+				'message' => 'Perubahan user gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 	}
+	header("Location: ../index.php?p=user");
+	exit;
  ?>

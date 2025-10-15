@@ -1,66 +1,76 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>SIM Penjualan</title>
-    <!-- Icons-->
-    <link href="assets/css/style.css" rel="stylesheet">
+<html lang="id">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SIM Penjualan — Login</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/login-3d.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/toast.css">
+	<link rel="stylesheet" type="text/css" href="assets/fontawesome/css/all.min.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+<body class="login-body">
+	<main class="login-shell">
+		<section class="login-panel tilt-card" data-float="26">
+			<div class="panel-head">
+				<span class="panel-kicker"><i class="fas fa-store"></i> SIM Penjualan</span>
+				<h1>Masuk ke Dashboard</h1>
+				<p>Kelola barang, pelanggan, dan transaksi dalam satu ruang kerja futuristik.</p>
+			</div>
+			<form class="login-form" action="system/cek_login.php" method="POST">
+				<label class="field">
+					<i class="field-icon fas fa-user"></i>
+					<input type="text" name="username" placeholder="Username Anda" autocomplete="off" required>
+				</label>
+				<label class="field">
+					<i class="field-icon fas fa-lock"></i>
+					<input type="password" name="password" placeholder="Password" required>
+				</label>
+				<button type="submit" name="submit" class="login-button">
+					<span>Masuk</span>
+					<i class="fas fa-arrow-right"></i>
+				</button>
+			</form>
+			<div class="panel-footer">
+				<i class="fas fa-info-circle"></i>
+				<span>Gunakan kredensial yang diberikan admin untuk mengakses sistem.</span>
+			</div>
+		</section>
+		<aside class="login-showcase tilt-card" data-float="18">
+			<div class="showcase-sphere"></div>
+			<div class="showcase-header">
+				<h2>3D Retail Intelligence</h2>
+				<p>Pantau performa toko dengan visual modern dan interaksi yang responsif.</p>
+			</div>
+			<ul class="feature-list">
+				<li><i class="fas fa-chart-line"></i> Insight penjualan realtime dengan tampilan dashboard 3D.</li>
+				<li><i class="fas fa-box-open"></i> Manajemen stok, pelanggan, dan transaksi hanya dalam beberapa klik.</li>
+				<li><i class="fas fa-shield-alt"></i> Keamanan login dengan notifikasi instan setiap kali autentikasi.</li>
+			</ul>
+		</aside>
+	</main>
 
-    <link rel="stylesheet" type="text/css" href="assets/fontawesome/css/all.min.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-  </head>
-  <body class="app flex-row align-items-center">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-8">
-          <div class="card-group">
-            <div class="card p-4">
-                
-              <div class="card-body">
-                <h1>Login</h1>
-                <p class="text-muted">Sign In to your account</p>
-              <form action="system/cek_login.php" method="POST">
-                
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="fa fa-user"></i>
-                    </span>
-                  </div>
-                    <input type="text" name="username" class="form-control" placeholder="Username" autocomplete="off" required="">
-                </div>
-
-
-                <div class="input-group mb-4">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="fa fa-lock"></i>
-                    </span>
-                  </div>
-                    <input type="password" name="password" class="form-control" placeholder="Password" required="">
-                </div>
-
-
-                <div class="row">
-                  <div class="col-6">
-                      <button type="submit" name="submit" class="btn btn-primary px-4">Login</button>
-                  </div>
-                </div>
-              </form>
-              
-              </div>
-            </div>
-
-
-            <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
-              <div class="card-body text-center">
-                <div>
-                  <h2>Hai Selamat Datang</h2>
-                  <p>Untuk Menggunakan Aplikasi SIM Penjualan Anda Harus Login Terlebih Dahulu</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+	<script type="text/javascript" src="assets/js/vanilla-tilt.min.js"></script>
+	<script type="text/javascript" src="assets/js/ui-3d.js"></script>
+	<script type="text/javascript" src="assets/js/app-toast.js"></script>
+	<?php
+	$flash = isset($_SESSION['flash']) ? $_SESSION['flash'] : null;
+	if ($flash) {
+		unset($_SESSION['flash']);
+		$toastData = $flash;
+		if (isset($toastData['print'])) {
+			unset($toastData['print']);
+		}
+	?>
+	<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		if (window.AppToast) {
+			AppToast.show(<?php echo json_encode($toastData); ?>);
+		}
+	});
+	</script>
+	<?php } ?>
 </body>
 </html>

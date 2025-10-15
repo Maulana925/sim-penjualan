@@ -13,23 +13,38 @@ include "../system/proses.php";
 		$simpan=$db->insert("jenis","'$_POST[id_jenis]',
 									'$_POST[nama_jenis]'");
 		if( $simpan ){
-			echo "<script>alert('Data Berhasil Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=jenis_barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Jenis Barang',
+				'message' => 'Jenis barang berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Disimpan')</script>";
-			echo "<script>document.location.href='../index.php?p=jenis_barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Jenis Barang',
+				'message' => 'Jenis barang gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 	}else{
 		$edit=$db->update("jenis","id_jenis='$_POST[id_jenis]',
 									nama_jenis='$_POST[nama_jenis]'","id_jenis = '$_POST[id_jenis]'");
 
 		if( $edit ){
-			echo "<script>alert('Data Berhasil Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=jenis_barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Jenis Barang',
+				'message' => 'Perubahan jenis barang berhasil disimpan.',
+				'type' => 'success'
+			];
 		}else{
-			echo "<script>alert('Data Gagal Diupdate')</script>";
-			echo "<script>document.location.href='../index.php?p=jenis_barang'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Jenis Barang',
+				'message' => 'Perubahan jenis barang gagal disimpan.',
+				'type' => 'error'
+			];
 		}
 	}
+
+	header("Location: ../index.php?p=jenis_barang");
+	exit;
 
  ?>

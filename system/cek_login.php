@@ -12,10 +12,21 @@
 			$_SESSION['login_id'] = $data['id_petugas'];
 			$_SESSION['username'] = $data['username'];
 			$_SESSION['level'] = $data['level'];
-			echo "<script>document.location.href='../index.php'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Halo, ' . $data['username'],
+				'message' => 'Selamat datang kembali di SIM Penjualan.',
+				'type' => 'success'
+			];
+			header("Location: ../index.php");
+			exit;
 		}else{
-			echo "<script>alert('Username atau Password Salah')</script>";
-		    echo "<script>document.location.href='../login.php'</script>";
+			$_SESSION['flash'] = [
+				'title' => 'Login Gagal',
+				'message' => 'Username atau password salah.',
+				'type' => 'error'
+			];
+		    header("Location: ../login.php");
+			exit;
 		}
 	}
  ?>

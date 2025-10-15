@@ -30,6 +30,10 @@ function idp(){
 			id_pelanggan:$('#id_pelanggan').val()
 		},
 		success:function(hasil){
+			if(!hasil || hasil.id_pelanggan === ""){
+				$('#nama_pelanggan').val("");
+				return;
+			}
 			$('#nama_pelanggan').val(hasil.nama_pelanggan);
 		}
 
@@ -46,8 +50,15 @@ function idb(){
 			id_barang:$('#id_barang').val()
 		},
 		success:function(hasil){
+			if(!hasil || hasil.id_barang === ""){
+				$('#nama_barang').val("");
+				$('#harga').val("");
+				$('#total').val("");
+				return;
+			}
 			$('#nama_barang').val(hasil.nama_barang);
 			$('#harga').val(hasil.harga);
+			t();
 		}
 
 	});
@@ -60,12 +71,32 @@ function hapus_detail(h){
 	$.ajax({
 		url:"crud/hapus_detail.php",
 		type:"POST",
+		dataType:"json",
 		data:{
 			id_detail_transaksi:h
 		},
-		success:function(hasil){
-			alert(hasil);
-			buka_tab();
+		success:function(res){
+			if(window.AppToast){
+				AppToast.show({
+					message: res && res.message ? res.message : "Detail transaksi berhasil dihapus.",
+					type: res && res.success ? "success" : "error"
+				});
+			}
+			if(res && res.success){
+				buka_tab();
+			}
+		},
+		error:function(xhr){
+			var msg = "Gagal menghapus data. Silakan coba lagi.";
+			if(xhr.responseJSON && xhr.responseJSON.message){
+				msg = xhr.responseJSON.message;
+			}
+			if(window.AppToast){
+				AppToast.show({
+					message: msg,
+					type: "error"
+				});
+			}
 		}
 
 	});
@@ -76,6 +107,10 @@ function hapus_detail(h){
 function t(){
 	hrg = $('#harga').val();
 	jml = $('#jumlah').val();
+	if(hrg === "" || jml === ""){
+		$('#total').val("");
+		return;
+	}
 	tot = hrg * jml;
 	$('#total').val(tot);
 }
@@ -83,19 +118,57 @@ function t(){
 
 // Simpan Detail
 function simpan_detail(){
+	if($('#id_barang').val() === "" || $('#jumlah').val() === "" || $('#total').val() === ""){
+		if(window.AppToast){
+			AppToast.show({
+				message: "Lengkapi data barang dan jumlah terlebih dahulu.",
+				type: "error"
+			});
+		}
+		return;
+	}
 	$.ajax({
 		url:"crud/simpan_detail.php",
 		type:"POST",
+		dataType:"json",
 		data:{
 			id_transaksi:$('#id_transaksi').val(),
 			id_barang:$('#id_barang').val(),
 			jumlah_beli:$('#jumlah').val(),
 			total:$('#total').val()
 		},
-		success:function(hasil){
-			alert(hasil);
-			buka_tab();
-		
+		success:function(res){
+			var msg = res && res.message ? res.message : "Detail transaksi berhasil disimpan.";
+			var type = res && res.success ? "success" : "error";
+
+			if(window.AppToast){
+				AppToast.show({
+					message: msg,
+					type: type
+				});
+			}
+
+			if(res && res.success){
+				buka_tab();
+				$('#id_barang').val("");
+				$('#nama_barang').val("");
+				$('#harga').val("");
+				$('#jumlah').val("");
+				$('#total').val("");
+				$('#id_barang').focus();
+			}
+		},
+		error:function(xhr){
+			var msg = "Gagal menyimpan detail transaksi. Silakan coba lagi.";
+			if(xhr.responseJSON && xhr.responseJSON.message){
+				msg = xhr.responseJSON.message;
+			}
+			if(window.AppToast){
+				AppToast.show({
+					message: msg,
+					type: "error"
+				});
+			}
 		}
 
 	});
@@ -125,6 +198,3 @@ $(document).ready(function(){
 		$('#lpr3').slideToggle("slow");
 	});
 });
-
-
-

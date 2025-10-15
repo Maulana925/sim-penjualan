@@ -6,15 +6,24 @@
 		exit;
 	}
 	 
-	include "../system/proses.php";
+include "../system/proses.php";
 	$idj = $_GET['idj'];
 	$hapus = $db->delete("jenis","id_jenis=$idj");
 	if( $hapus ){
-		echo "<script>alert('Data Berhasil Dihapus')</script>";
-		echo "<script>document.location.href='../index.php?p=jenis_barang'</script>";
+		$_SESSION['flash'] = [
+			'title' => 'Jenis Barang',
+			'message' => 'Data jenis barang berhasil dihapus.',
+			'type' => 'success'
+		];
 	}else{
-		echo "<script>alert('Data Gagal Dihapus')</script>";
-		echo "<script>document.location.href='../index.php?p=jenis_barang'</script>";
+		$_SESSION['flash'] = [
+			'title' => 'Jenis Barang',
+			'message' => 'Data jenis barang gagal dihapus.',
+			'type' => 'error'
+		];
 	}
+
+	header("Location: ../index.php?p=jenis_barang");
+	exit;
 	
  ?>

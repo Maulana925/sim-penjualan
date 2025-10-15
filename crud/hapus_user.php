@@ -6,14 +6,23 @@
 		exit;
 	}
 	
-	include "../system/proses.php";
+include "../system/proses.php";
 	$idu = $_GET['idu'];
 	$hapus = $db->delete("petugas","id_petugas='$idu'");
 	if( $hapus ){
-		echo "<script>alert('Data Berhasil Dihapus')</script>";
-		echo "<script>document.location.href='../index.php?p=user'</script>";
+		$_SESSION['flash'] = [
+			'title' => 'Manajemen User',
+			'message' => 'User berhasil dihapus.',
+			'type' => 'success'
+		];
 	}else{
-		echo "<script>alert('Data Gagal Dihapus')</script>";
-		echo "<script>document.location.href='../index.php?p=user'</script>";
+		$_SESSION['flash'] = [
+			'title' => 'Manajemen User',
+			'message' => 'User gagal dihapus.',
+			'type' => 'error'
+		];
 	}
+
+	header("Location: ../index.php?p=user");
+	exit;
  ?>

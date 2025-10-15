@@ -6,6 +6,8 @@
 			$psw='';
 			$dbname='db_penjualan';
 			$kon=$this->con=new PDO("mysql:host=$server;dbname=$dbname",$user,$psw);
+			$this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 		}
 
 
