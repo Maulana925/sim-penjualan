@@ -1,14 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
 	var tiltable = document.querySelectorAll(".tilt-card, .stat-card, .welcome-card, .content .isi-content, .sidebar");
 	if (window.VanillaTilt && tiltable.length) {
-		VanillaTilt.init(tiltable, {
-			max: 12,
-			speed: 400,
-			scale: 1.02,
-			glare: true,
-			"max-glare": 0.25,
-			gyroscope: true,
-			perspective: 900
+		tiltable.forEach(function (el) {
+			if (el && !el.vanillaTilt) {
+				new window.VanillaTilt(el, {
+					max: 12,
+					speed: 400,
+					scale: 1.02,
+					glare: true,
+					"max-glare": 0.25,
+					gyroscope: true,
+					perspective: 900
+				});
+			}
 		});
 	}
 

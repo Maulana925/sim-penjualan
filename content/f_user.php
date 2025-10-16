@@ -18,13 +18,16 @@
 		$sub = 'edit_user';
 	}
 	$qr = $db->get("*","petugas","WHERE id_petugas='$_GET[id_user]'");
-	$row=$qr->fetch();
+	$row = $qr ? $qr->fetch(PDO::FETCH_ASSOC) : null;
+	$username = $row ? $row['username'] : "";
+	$password = $row ? $row['password'] : "";
+	$currentLevel = $row ? strtolower($row['level']) : "";
  ?>
 
 
 
 <div class="judul-content">
-	<h1>Input Pelanggan</h1>
+	<h1>Input User</h1>
 </div>
 <div class="isi-content">
 	<form action="crud/simpan_user.php" method="POST">
@@ -38,18 +41,18 @@
 
 
 			<tr>
-				<td><label for="nama_pelanggan">Username</label></td>
+				<td><label for="username_input">Username</label></td>
 			</tr>
 			<tr>
-				<td><input type="text" name="username" class="text" autocomplete="off" required="" id="nama_pelanggan" value="<?= $row['username']; ?>"></td>
+				<td><input type="text" name="username" class="text" autocomplete="off" required="" id="username_input" value="<?= htmlspecialchars($username); ?>"></td>
 			</tr>
 
 
 			<tr>
-				<td><label for="alamat">Password</label></td>
+				<td><label for="password_input">Password</label></td>
 			</tr>
 			<tr>
-				<td><input type="text" name="password" class="text" autocomplete="off" required="" id="alamat" value="<?= $row['password']; ?>"></td>
+				<td><input type="text" name="password" class="text" autocomplete="off" required="" id="password_input" value="<?= htmlspecialchars($password); ?>"></td>
 			</tr>
 
 			<tr>
@@ -58,10 +61,10 @@
 			<tr>
 				<td>
 					<select class="text" name="level">
-						<option disabled selected>-- Pilih Level --</option>
-						<option value="admin">Admin</option>
-						<option value="manager">Manager</option>
-						<option value="kasir">Kasir</option>
+						<option disabled <?= $currentLevel ? "" : "selected"; ?>>-- Pilih Level --</option>
+						<option value="admin" <?= $currentLevel === "admin" ? "selected" : ""; ?>>Admin</option>
+						<option value="manager" <?= $currentLevel === "manager" ? "selected" : ""; ?>>Manager</option>
+						<option value="kasir" <?= $currentLevel === "kasir" ? "selected" : ""; ?>>Kasir</option>
 						
 					</select>
 				</td>

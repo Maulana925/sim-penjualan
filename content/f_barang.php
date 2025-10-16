@@ -1,6 +1,16 @@
 <?php 
 
 	include "system/proses.php";
+	$role = isset($_SESSION['level']) ? strtolower($_SESSION['level']) : '';
+	if ($role === 'kasir') {
+		$_SESSION['flash'] = [
+			'title' => 'Akses Ditolak',
+			'message' => 'Kasir hanya dapat melihat data barang.',
+			'type' => 'warning'
+		];
+		header("Location: index.php?p=barang");
+		exit;
+	}
 	error_reporting(0);
 	if (empty($_GET['id_barang'])){
 		$connect = mysqli_connect("localhost", "root", "", "db_penjualan");
@@ -104,5 +114,4 @@
 		</table>
 	</form>
 </div>
-
 

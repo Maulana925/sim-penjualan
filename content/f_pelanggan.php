@@ -1,6 +1,16 @@
 <?php 
 // Mencari ID Otomatis
 	include "system/proses.php";
+	$role = isset($_SESSION['level']) ? strtolower($_SESSION['level']) : '';
+	if ($role === 'kasir') {
+		$_SESSION['flash'] = [
+			'title' => 'Akses Ditolak',
+			'message' => 'Kasir hanya dapat melihat data pelanggan.',
+			'type' => 'warning'
+		];
+		header("Location: index.php?p=pelanggan");
+		exit;
+	}
 	error_reporting(0);
 	if( empty($_GET['id_pelanggan']) ){
 		$connect = mysqli_connect("localhost", "root", "", "db_penjualan");
@@ -18,7 +28,11 @@
 		$sub = 'edit_pelanggan';
 	}
 	$qr = $db->get("*","pelanggan","WHERE id_pelanggan='$_GET[id_pelanggan]'");
-	$row=$qr->fetch();
+	$row = $qr ? $qr->fetch(PDO::FETCH_ASSOC) : null;
+	$nama = $row ? $row['nama'] : "";
+	$alamat = $row ? $row['alamat'] : "";
+	$no_telp = $row ? $row['no_telp'] : "";
+	$email = $row ? $row['email'] : "";
  ?>
 
 
@@ -41,7 +55,7 @@
 				<td><label for="nama_pelanggan">Nama Pelanggan</label></td>
 			</tr>
 			<tr>
-				<td><input type="text" name="nama_pelanggan" class="text" autocomplete="off" required="" id="nama_pelanggan" value="<?= $row['nama']; ?>"></td>
+				<td><input type="text" name="nama_pelanggan" class="text" autocomplete="off" required="" id="input_nama_pelanggan" value="<?= htmlspecialchars($nama); ?>"></td>
 			</tr>
 
 
@@ -49,20 +63,20 @@
 				<td><label for="alamat">Alamat</label></td>
 			</tr>
 			<tr>
-				<td><input type="text" name="alamat" class="text" autocomplete="off" required="" id="alamat" value="<?= $row['alamat']; ?>"></td>
+				<td><input type="text" name="alamat" class="text" autocomplete="off" required="" id="input_alamat" value="<?= htmlspecialchars($alamat); ?>"></td>
 			</tr>
 
 			<tr>
 				<td><label for="no_telp">No.Telp</label></td>
 			</tr>
 			<tr>
-				<td><input type="text" name="no_telp" class="text" autocomplete="off" required="" id="no_telp" value="<?= $row['no_telp']; ?>"></td>
+				<td><input type="text" name="no_telp" class="text" autocomplete="off" required="" id="input_no_telp" value="<?= htmlspecialchars($no_telp); ?>"></td>
 			</tr>
 			<tr>
 				<td><label for="email">E-Mail</label></td>
 			</tr>
 			<tr>
-				<td><input type="email" name="email" class="text" autocomplete="off" required="" id="email" value="<?= $row['email']; ?>"></td>
+				<td><input type="email" name="email" class="text" autocomplete="off" required="" id="input_email" value="<?= htmlspecialchars($email); ?>"></td>
 			</tr>
 
 

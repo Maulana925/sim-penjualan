@@ -1,10 +1,20 @@
 <?php
 	
-	session_start();
-	if(!isset($_SESSION["login"])){
-		header("Location: ../login.php");
-		exit;
-	}
+session_start();
+if(!isset($_SESSION["login"])){
+	header("Location: ../login.php");
+	exit;
+}
+
+if (isset($_SESSION['level']) && strtolower($_SESSION['level']) === 'kasir') {
+	$_SESSION['flash'] = [
+		'title' => 'Akses Ditolak',
+		'message' => 'Kasir tidak diizinkan mengubah data barang.',
+		'type' => 'warning'
+	];
+	header("Location: ../index.php?p=barang");
+	exit;
+}
 
 include "../system/proses.php";
 	$idb = $_GET['idb'];

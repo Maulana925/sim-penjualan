@@ -234,6 +234,18 @@
 		detectType: detectType
 	};
 
+	if (window.__pendingAppToast) {
+		var pending = window.__pendingAppToast;
+		delete window.__pendingAppToast;
+		setTimeout(function(){
+			try{
+				show(pending);
+			}catch(err){
+				console.error('Gagal menampilkan toast tertunda:', err);
+			}
+		}, 10);
+	}
+
 	// Backward compatibility helpers
 	window.showToast = show;
 	window.showNotification = function (message, type, overrides) {
